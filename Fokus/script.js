@@ -19,7 +19,7 @@ const beepAudio = new Audio('sons/beep.mp3')
 const txtStartPause = document.querySelector('#start-pause span')
 const temporizador = document.querySelector('#timer')
 
-let tempoDecorridoEmSegundos = 1500
+let tempoDecorridoEmSegundos = 10
 let tempoDecorridoAnterior = 1500
 let intervalo = null
 
@@ -32,7 +32,7 @@ musicaInput.addEventListener('change', () => {
 })
 
 btnFoco.addEventListener('click', () => {
-    tempoDecorridoEmSegundos = 1500
+    tempoDecorridoEmSegundos = 10
     tempoDecorridoAnterior = 1500
     alterarContexto('foco')
     btnFoco.classList.add('active')
@@ -88,6 +88,11 @@ const contagemRegressiva = () => {
         zerarContagem()
         tempoDecorridoEmSegundos = tempoDecorridoAnterior
         mostrarTemporizador()
+        const focoAtivo = html.getAttribute('data-contexto') == 'foco'
+        if(focoAtivo) {
+            const evento = new CustomEvent('FocoPersonalizado')
+            document.dispatchEvent(evento)
+        }
         return
     }
    
